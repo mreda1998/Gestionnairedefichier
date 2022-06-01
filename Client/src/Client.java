@@ -1,6 +1,8 @@
 
 import java.io.DataInputStream;
 import java.net.Socket;
+import java.util.Scanner;
+import java.io.*;
 
 public class Client {
 	
@@ -8,28 +10,34 @@ public class Client {
 	
 	private static Socket socket;
 	
+	
 	public static void main (String[] args) throws Exception {
 		
 		// Adresse et port serveur
-		String serverAddress = "127.0.0.1";
-		int port = 5000;
+		String serverAddress = AddressReader.read();
 		
+		int port = portReader.read();
 		// Creation de connexion avec le serveur
 		socket = new Socket(serverAddress,port);
 		
 		System.out.format("The server is running on %s:%d%n", serverAddress,port);
 		
-		//Creation cana entrant pour reception message envoye par le seveur
+		Scanner reader = new Scanner(System.in);
+		String[] message = reader.nextLine().split(" ");
 		
-		DataInputStream in = new DataInputStream(socket.getInputStream());
-		
-		//Attente reception message envoyé par serveur 
-		
-		String helloMessageFromServer = in.readUTF();
-		System.out.println(helloMessageFromServer);
+		switch (message[0]) {
+		case "ls":
+		case "exit":
+		case "download":
+		case "mkdir":
+		case "upload":
+		case "cd":
+	
+		}
 		
 		socket.close();
 		
 	}
+	
 
 }
